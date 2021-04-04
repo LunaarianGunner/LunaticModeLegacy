@@ -2863,6 +2863,17 @@ spriteSheets:
   heightOffset: 0.0
   shadow: true
   shadowResizing: 0
+- &rabbit
+  id: 133
+  name: rabbit
+  width: 8
+  height: 8
+  image: images/rabbit.png
+  animationTemplate: *single_image
+  equipmentOffset: null
+  heightOffset: 0.0
+  shadow: true
+  shadowResizing: 0
 effects:
 - &wood_bow_hit
   id: 0
@@ -8142,6 +8153,37 @@ effects:
     statMultipliers: []
   delayedFollowingElements: []
   deathAlterations: []
+- &rabbit_boost
+  id: 93
+  name: rabbit_boost
+  spriteSheet: null
+  orientation: STATIC
+  drawDepth: NORMAL
+  solid: true
+  duration: 50
+  entityCollisionRadius: 10.0
+  mapCollisionRadius: 0.0
+  movement: !!StaticEffectMovement {minDistance: 0.0, maxDistance: 0.0}
+  targets:
+  - targetType: ALL_ALLIES
+    destroyWhenCollide: true
+    alterations:
+    - !!StatAlteration
+      targetType: TARGET
+      duration: 15000
+      stackPolicy: STACK
+      statModifier: {statType: SPEED, operationType: ADDITIVE, value: 1.0}
+    - !!StatAlteration
+      targetType: TARGET
+      duration: 15000
+      stackPolicy: STACK
+      statModifier: {statType: AGILITY, operationType: ADDITIVE, value: 8.0}
+  repeatFollowingElements:
+    id: 244
+    base: 0.0
+    statMultipliers: []
+  delayedFollowingElements: []
+  deathAlterations: []
 items:
 - &wood_sword03 !!WeaponItem
   id: 0
@@ -9220,6 +9262,89 @@ items:
           randomAngle: 0.0
           effect: *steel_shield
     ammunition: null
+- !!EdibleItem
+  id: 95
+  name: rabbit_egg
+  maxStackSize: 1
+  frame: {x: 0, y: 0}
+  image: images/rabbit_egg.png
+  duration: 0
+  alterations:
+  - !!FollowingElementAlteration
+    targetType: TARGET
+    followingElement: !!FollowingCreature
+      creature: &rabbit04
+        id: 25
+        name: rabbit
+        spriteSheet: *rabbit
+        collisionRadius: 0.6
+        strength: 2.0
+        agility: 10.0
+        intelligence: 5.0
+        solid: true
+        behaviorSet: &rabbit02
+          id: 23
+          name: rabbit
+          behaviors:
+          - &follow !!MoveTowardBehavior
+            id: 0
+            name: follow
+            changeConditions:
+            - !!TimeCondition
+              id: 0
+              nextBehavior: &boost !!MoveTowardBehavior
+                id: 1
+                name: boost
+                changeConditions:
+                - !!TimeCondition
+                  id: 0
+                  nextBehavior: *follow
+                  affectedNeighborsDistance: 0.0
+                  targetTime: 500
+                abilityToUseId: 1
+                targetType: MASTER
+                minDistance: 0.7
+                randomAngle: 0.0
+              affectedNeighborsDistance: 0.0
+              targetTime: 30000
+            abilityToUseId: 0
+            targetType: MASTER
+            minDistance: 0.7
+            randomAngle: 0.0
+          - *boost
+        itemReward: null
+        abilitySet: &rabbit03
+          id: 20
+          name: rabbit
+          abilities:
+          - !!CreatureAlterationAbility
+            id: 0
+            cooldown: 700
+            alterations:
+            - !!FollowingElementAlteration
+              targetType: TARGET
+              followingElement: !!FollowingEffect
+                offsetAngleEffect:
+                  offsetAngle: 0.0
+                  randomAngle: 0.0
+                  effect: *rabbit_boost
+            predictionBulletSpeed: 0.0
+        lifetime: 0
+        inventorySize: 0
+      owned: true
+      strengthBonus:
+        id: 249
+        base: 0.0
+        statMultipliers: []
+      agilityBonus:
+        id: 250
+        base: 0.0
+        statMultipliers: []
+      intelligenceBonus:
+        id: 251
+        base: 0.0
+        statMultipliers: []
+  - !!PlaySoundAlteration {targetType: TARGET, preset: POP}
 itemCrafts:
 - id: 0
   name: wood_sword
@@ -11325,6 +11450,7 @@ behaviorSets:
 - *pixie_archer03
 - *pixie_mage03
 - *ball_breaker02
+- *rabbit02
 abilitySets:
 - *ninja_pig03
 - *night_ghost
@@ -11719,6 +11845,7 @@ abilitySets:
 - *pixie_rogue04
 - *pixie_mage04
 - *ball_breaker03
+- *rabbit03
 creatures:
 - &pixie04
   id: 0
@@ -11888,6 +12015,7 @@ creatures:
 - *pixie_rogue05
 - *pixie_mage05
 - *ball_breaker04
+- *rabbit04
 tiles:
 - &grass
   id: 0

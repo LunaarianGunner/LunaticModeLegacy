@@ -344,8 +344,6 @@ children:
     - !!element {type: ITEM_CRAFT, id: 1}
     - !!element {type: ITEM_CRAFT, id: 2}
     - !!element {type: ITEM_CRAFT, id: 30}
-    - !!element {type: ITEM, id: 53}
-    - !!element {type: ITEM_CRAFT, id: 35}
     - !!folder
       name: potions
       children:
@@ -365,7 +363,13 @@ children:
       children:
       - !!folder
         name: Rabbit
-        children: []
+        children:
+        - !!element {type: ITEM, id: 95}
+      - !!folder
+        name: Wooden Puppet
+        children:
+        - !!element {type: ITEM, id: 53}
+        - !!element {type: ITEM_CRAFT, id: 35}
   - !!folder
     name: Structures
     children:
@@ -757,7 +761,12 @@ children:
     children:
     - !!folder
       name: Rabbit
-      children: []
+      children:
+      - !!element {type: SPRITE_SHEET, id: 133}
+      - !!element {type: CREATURE, id: 25}
+      - !!element {type: BEHAVIOR_SET, id: 23}
+      - !!element {type: ABILITY_SET, id: 20}
+      - !!element {type: EFFECT, id: 93}
 - !!folder
   name: Map
   children:
