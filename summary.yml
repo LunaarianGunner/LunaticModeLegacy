@@ -1,0 +1,33 @@
+!!com.pixurvival.core.contentPack.summary.ContentPackSummary
+identifier:
+  name: Lunatic_Mode
+  version: {major: 1, minor: 5}
+gameModeSummaries:
+- nameTranslations: {en: Cooperative / solo survival}
+  descriptionTranslations: {en: 'Survive, alone or in a group, in an endless open world, watch out for invasions of ninja
+      pigs, the night, and your stomach!'}
+  teamNumberInterval: {min: 1, max: 1}
+  teamSizeInterval: {min: 1, max: 10}
+  roleSummaries: null
+- nameTranslations: {en: Team survival}
+  descriptionTranslations: {en: Be the last surviving squad in a tightening terrain from 20 minutes!}
+  teamNumberInterval: {min: 2, max: 6}
+  teamSizeInterval: {min: 1, max: 4}
+  roleSummaries: null
+- nameTranslations: {en: Pig revenge}
+  descriptionTranslations: {en: 'So much bacon and sausage. The pigs take revenge! Survive their assaults for 15 minutes,
+      find the supply crates to better equip yourself!'}
+  teamNumberInterval: {min: 1, max: 1}
+  teamSizeInterval: {min: 1, max: 10}
+  roleSummaries: null
+- nameTranslations: {en: Lunacy}
+  descriptionTranslations: {en: 'Shorter days, long nights, multiple waves of enemies. For loot and glory. Also bragging rights.'}
+  teamNumberInterval: {min: 1, max: 1}
+  teamSizeInterval: {min: 1, max: 10}
+  roleSummaries: null
+- nameTranslations: {en: Lunacy Team Survival}
+  descriptionTranslations: {en: Fight to the death.}
+  teamNumberInterval: {min: 1, max: 4}
+  teamSizeInterval: {min: 1, max: 10}
+  roleSummaries: null
+releaseVersion: ALPHA_12B
