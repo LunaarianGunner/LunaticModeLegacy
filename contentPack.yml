@@ -2874,6 +2874,17 @@ spriteSheets:
   heightOffset: 0.0
   shadow: true
   shadowResizing: 0
+- &arcanite_automaton
+  id: 134
+  name: arcanite_automaton
+  width: 8
+  height: 8
+  image: images/arcanite_automaton.png
+  animationTemplate: *single_image
+  equipmentOffset: null
+  heightOffset: 0.0
+  shadow: true
+  shadowResizing: 0
 effects:
 - &wood_bow_hit
   id: 0
@@ -8184,6 +8195,62 @@ effects:
     statMultipliers: []
   delayedFollowingElements: []
   deathAlterations: []
+- &arcanite_robot_shoot
+  id: 94
+  name: arcanite_robot_shoot
+  spriteSheet: *arcanite_golem_hit
+  orientation: MOVING_ANGLE
+  drawDepth: NORMAL
+  solid: true
+  duration: 1300
+  entityCollisionRadius: 0.4
+  mapCollisionRadius: 0.4
+  movement: !!LinearEffectMovement {initialDistance: 0.0, speed: 18.0, relative: false, destroyAtTargetPosition: false}
+  targets:
+  - targetType: ALL_ENEMIES
+    destroyWhenCollide: true
+    alterations:
+    - !!InstantDamageAlteration
+      targetType: TARGET
+      amount:
+        id: 246
+        base: 20.0
+        statMultipliers: []
+      applyToStructures: true
+      attributes: {bypassInvincibility: false, trueDamage: true}
+  repeatFollowingElements:
+    id: 245
+    base: 0.0
+    statMultipliers: []
+  delayedFollowingElements: []
+  deathAlterations: []
+- &pixie_heal
+  id: 95
+  name: pixie_heal
+  spriteSheet: null
+  orientation: STATIC
+  drawDepth: NORMAL
+  solid: true
+  duration: 1000
+  entityCollisionRadius: 5.0
+  mapCollisionRadius: 5.0
+  movement: !!StaticEffectMovement {minDistance: 0.0, maxDistance: 0.0}
+  targets:
+  - targetType: ALL_ALLIES
+    destroyWhenCollide: true
+    alterations:
+    - !!InstantHealAlteration
+      targetType: TARGET
+      amount:
+        id: 256
+        base: 25.0
+        statMultipliers: []
+  repeatFollowingElements:
+    id: 254
+    base: 0.0
+    statMultipliers: []
+  delayedFollowingElements: []
+  deathAlterations: []
 items:
 - &wood_sword03 !!WeaponItem
   id: 0
@@ -9278,7 +9345,7 @@ items:
         name: rabbit
         spriteSheet: *rabbit
         collisionRadius: 0.6
-        strength: 2.0
+        strength: 6.0
         agility: 10.0
         intelligence: 5.0
         solid: true
@@ -9345,6 +9412,119 @@ items:
         base: 0.0
         statMultipliers: []
   - !!PlaySoundAlteration {targetType: TARGET, preset: POP}
+- !!EdibleItem
+  id: 96
+  name: arcanite_automaton_egg
+  maxStackSize: 1
+  frame: {x: 0, y: 0}
+  image: images/arcanite_automaton_egg.png
+  duration: 0
+  alterations:
+  - !!FollowingElementAlteration
+    targetType: TARGET
+    followingElement: !!FollowingCreature
+      creature: &arcanite_automaton04
+        id: 26
+        name: arcanite_automaton
+        spriteSheet: *arcanite_automaton
+        collisionRadius: 0.5
+        strength: 10.0
+        agility: 7.0
+        intelligence: 4.0
+        solid: true
+        behaviorSet: &arcanite_automaton02
+          id: 24
+          name: arcanite_automaton
+          behaviors:
+          - &follow02 !!MoveTowardBehavior
+            id: 0
+            name: follow
+            changeConditions:
+            - !!DistanceCondition
+              id: 0
+              nextBehavior: &attack04 !!MoveTowardBehavior
+                id: 1
+                name: attack
+                changeConditions:
+                - !!DistanceCondition
+                  id: 0
+                  nextBehavior: &back_up !!GetAwayBehavior
+                    id: 2
+                    name: back up
+                    changeConditions:
+                    - !!DistanceCondition
+                      id: 0
+                      nextBehavior: *attack04
+                      affectedNeighborsDistance: 0.0
+                      targetType: CLOSEST_ENNEMY
+                      operator: GREATER_THAN
+                      targetDistance: 5.0
+                    abilityToUseId: 1
+                    targetType: CLOSEST_ENNEMY
+                  affectedNeighborsDistance: 0.0
+                  targetType: CLOSEST_ENNEMY
+                  operator: LESS_THAN
+                  targetDistance: 2.0
+                - !!DistanceCondition
+                  id: 0
+                  nextBehavior: *follow02
+                  affectedNeighborsDistance: 0.0
+                  targetType: CLOSEST_ENNEMY
+                  operator: GREATER_THAN
+                  targetDistance: 10.0
+                - !!DistanceCondition
+                  id: 0
+                  nextBehavior: *follow02
+                  affectedNeighborsDistance: 0.0
+                  targetType: MASTER
+                  operator: GREATER_THAN
+                  targetDistance: 10.0
+                abilityToUseId: 1
+                targetType: CLOSEST_ENNEMY
+                minDistance: 4.0
+                randomAngle: 0.0
+              affectedNeighborsDistance: 0.0
+              targetType: CLOSEST_ENNEMY
+              operator: LESS_THAN
+              targetDistance: 10.0
+            abilityToUseId: 0
+            targetType: MASTER
+            minDistance: 3.0
+            randomAngle: 0.0
+          - *attack04
+          - *back_up
+        itemReward: null
+        abilitySet: &arcanite_automaton03
+          id: 21
+          name: arcanite_automaton
+          abilities:
+          - !!CreatureAlterationAbility
+            id: 0
+            cooldown: 700
+            alterations:
+            - !!FollowingElementAlteration
+              targetType: TARGET
+              followingElement: !!FollowingEffect
+                offsetAngleEffect:
+                  offsetAngle: 0.0
+                  randomAngle: 0.13962634
+                  effect: *arcanite_robot_shoot
+            predictionBulletSpeed: 18.0
+        lifetime: 0
+        inventorySize: 0
+      owned: true
+      strengthBonus:
+        id: 251
+        base: 0.0
+        statMultipliers: []
+      agilityBonus:
+        id: 252
+        base: 0.0
+        statMultipliers: []
+      intelligenceBonus:
+        id: 253
+        base: 0.0
+        statMultipliers: []
 itemCrafts:
 - id: 0
   name: wood_sword
@@ -11451,6 +11631,46 @@ behaviorSets:
 - *pixie_mage03
 - *ball_breaker02
 - *rabbit02
+- *arcanite_automaton02
+- &pixie_pet
+  id: 25
+  name: pixie_pet
+  behaviors:
+  - &follow03 !!MoveTowardBehavior
+    id: 0
+    name: follow
+    changeConditions:
+    - !!DistanceCondition
+      id: 0
+      nextBehavior: &flee !!GetAwayBehavior
+        id: 1
+        name: flee
+        changeConditions:
+        - !!DistanceCondition
+          id: 0
+          nextBehavior: *follow03
+          affectedNeighborsDistance: 0.0
+          targetType: MASTER
+          operator: GREATER_THAN
+          targetDistance: 8.0
+        - !!DistanceCondition
+          id: 0
+          nextBehavior: *follow03
+          affectedNeighborsDistance: 0.0
+          targetType: CLOSEST_ENNEMY
+          operator: GREATER_THAN
+          targetDistance: 4.0
+        abilityToUseId: 0
+        targetType: CLOSEST_ENNEMY
+      affectedNeighborsDistance: 0.0
+      targetType: CLOSEST_ENNEMY
+      operator: LESS_THAN
+      targetDistance: 2.0
+    abilityToUseId: 1
+    targetType: MASTER
+    minDistance: 2.0
+    randomAngle: 0.0
+  - *flee
 abilitySets:
 - *ninja_pig03
 - *night_ghost
@@ -11846,6 +12066,23 @@ abilitySets:
 - *pixie_mage04
 - *ball_breaker03
 - *rabbit03
+- *arcanite_automaton03
+- &pixie_pet02
+  id: 22
+  name: pixie_pet
+  abilities:
+  - !!CreatureAlterationAbility
+    id: 0
+    cooldown: 10000
+    alterations:
+    - !!FollowingElementAlteration
+      targetType: TARGET
+      followingElement: !!FollowingEffect
+        offsetAngleEffect:
+          offsetAngle: 0.0
+          randomAngle: 0.0
+          effect: *pixie_heal
+    predictionBulletSpeed: 0.0
 creatures:
 - &pixie04
   id: 0
@@ -12016,6 +12253,20 @@ creatures:
 - *pixie_mage05
 - *ball_breaker04
 - *rabbit04
+- *arcanite_automaton04
+- id: 27
+  name: pixie_pet
+  spriteSheet: *pixie
+  collisionRadius: 0.6
+  strength: 4.0
+  agility: 10.0
+  intelligence: 4.0
+  solid: true
+  behaviorSet: *pixie_pet
+  itemReward: null
+  abilitySet: *pixie_pet02
+  lifetime: 0
+  inventorySize: 0
 tiles:
 - &grass
   id: 0

@@ -370,6 +370,10 @@ children:
         children:
         - !!element {type: ITEM, id: 53}
         - !!element {type: ITEM_CRAFT, id: 35}
+      - !!folder
+        name: Arcanite Automaton
+        children:
+        - !!element {type: ITEM, id: 96}
   - !!folder
     name: Structures
     children:
@@ -684,12 +688,6 @@ children:
     - !!element {type: ITEM_REWARD, id: 14}
     - !!element {type: EFFECT, id: 48}
   - !!folder
-    name: Wooden puppet
-    children:
-    - !!element {type: CREATURE, id: 13}
-    - !!element {type: SPRITE_SHEET, id: 84}
-    - !!element {type: BEHAVIOR_SET, id: 13}
-  - !!folder
     name: Dark mage
     children:
     - !!element {type: SPRITE_SHEET, id: 92}
@@ -767,6 +765,27 @@ children:
       - !!element {type: BEHAVIOR_SET, id: 23}
       - !!element {type: ABILITY_SET, id: 20}
       - !!element {type: EFFECT, id: 93}
+    - !!folder
+      name: Wooden Puppet
+      children:
+      - !!element {type: CREATURE, id: 13}
+      - !!element {type: SPRITE_SHEET, id: 84}
+      - !!element {type: BEHAVIOR_SET, id: 13}
+    - !!folder
+      name: Arcanite Automaton
+      children:
+      - !!element {type: SPRITE_SHEET, id: 134}
+      - !!element {type: BEHAVIOR_SET, id: 24}
+      - !!element {type: ABILITY_SET, id: 21}
+      - !!element {type: EFFECT, id: 94}
+      - !!element {type: CREATURE, id: 26}
+    - !!folder
+      name: Pixie
+      children:
+      - !!element {type: BEHAVIOR_SET, id: 25}
+      - !!element {type: ABILITY_SET, id: 22}
+      - !!element {type: EFFECT, id: 95}
+      - !!element {type: CREATURE, id: 27}
 - !!folder
   name: Map
   children:
