@@ -1400,6 +1400,12 @@ equipmentOffsets:
   name: steel_sword
   frameOffsets:
   - {x: 0, y: 0, offsetX: 1, offsetY: 0, back: false}
+- &forest_staff
+  id: 20
+  name: forest_staff
+  frameOffsets:
+  - {x: 0, y: 0, offsetX: 2, offsetY: 1, back: false}
+  - {x: 1, y: 0, offsetX: 1, offsetY: 1, back: false}
 spriteSheets:
 - &character03
   id: 0
@@ -2882,6 +2888,17 @@ spriteSheets:
   image: images/arcanite_automaton.png
   animationTemplate: *single_image
   equipmentOffset: null
+  heightOffset: 0.0
+  shadow: true
+  shadowResizing: 0
+- &forest_staff02
+  id: 135
+  name: forest_staff
+  width: 4
+  height: 8
+  image: images/forest_staff_equip.png
+  animationTemplate: *bidirectionnal_single_image_equipment
+  equipmentOffset: *forest_staff
   heightOffset: 0.0
   shadow: true
   shadowResizing: 0
@@ -7191,6 +7208,386 @@ effects:
                 image: images/items.png
               quantity: 2
             probability: 0.5
+          - itemStack: !!ItemStack
+              item: &arcanite_automaton_egg !!EdibleItem
+                id: 96
+                name: arcanite_automaton_egg
+                maxStackSize: 1
+                frame: {x: 0, y: 0}
+                image: images/arcanite_automaton_egg.png
+                duration: 0
+                alterations:
+                - !!FollowingElementAlteration
+                  targetType: TARGET
+                  followingElement: !!FollowingCreature
+                    creature: &arcanite_automaton04
+                      id: 26
+                      name: arcanite_automaton
+                      spriteSheet: *arcanite_automaton
+                      collisionRadius: 0.5
+                      strength: 10.0
+                      agility: 7.0
+                      intelligence: 4.0
+                      solid: true
+                      behaviorSet: &arcanite_automaton02
+                        id: 24
+                        name: arcanite_automaton
+                        behaviors:
+                        - &follow !!MoveTowardBehavior
+                          id: 0
+                          name: follow
+                          changeConditions:
+                          - !!DistanceCondition
+                            id: 0
+                            nextBehavior: &attack04 !!MoveTowardBehavior
+                              id: 1
+                              name: attack
+                              changeConditions:
+                              - !!DistanceCondition
+                                id: 0
+                                nextBehavior: &back_up !!GetAwayBehavior
+                                  id: 2
+                                  name: back up
+                                  changeConditions:
+                                  - !!DistanceCondition
+                                    id: 0
+                                    nextBehavior: *attack04
+                                    affectedNeighborsDistance: 0.0
+                                    targetType: CLOSEST_ENNEMY
+                                    operator: GREATER_THAN
+                                    targetDistance: 5.0
+                                  abilityToUseId: 1
+                                  targetType: CLOSEST_ENNEMY
+                                affectedNeighborsDistance: 0.0
+                                targetType: CLOSEST_ENNEMY
+                                operator: LESS_THAN
+                                targetDistance: 2.0
+                              - !!DistanceCondition
+                                id: 0
+                                nextBehavior: *follow
+                                affectedNeighborsDistance: 0.0
+                                targetType: CLOSEST_ENNEMY
+                                operator: GREATER_THAN
+                                targetDistance: 10.0
+                              - !!DistanceCondition
+                                id: 0
+                                nextBehavior: *follow
+                                affectedNeighborsDistance: 0.0
+                                targetType: MASTER
+                                operator: GREATER_THAN
+                                targetDistance: 10.0
+                              abilityToUseId: 1
+                              targetType: CLOSEST_ENNEMY
+                              minDistance: 4.0
+                              randomAngle: 0.0
+                            affectedNeighborsDistance: 0.0
+                            targetType: CLOSEST_ENNEMY
+                            operator: LESS_THAN
+                            targetDistance: 10.0
+                          abilityToUseId: 0
+                          targetType: MASTER
+                          minDistance: 3.0
+                          randomAngle: 0.0
+                        - *attack04
+                        - *back_up
+                      itemReward: null
+                      abilitySet: &arcanite_automaton03
+                        id: 21
+                        name: arcanite_automaton
+                        abilities:
+                        - !!CreatureAlterationAbility
+                          id: 0
+                          cooldown: 700
+                          alterations:
+                          - !!FollowingElementAlteration
+                            targetType: TARGET
+                            followingElement: !!FollowingEffect
+                              offsetAngleEffect:
+                                offsetAngle: 0.0
+                                randomAngle: 0.13962634
+                                effect: &arcanite_robot_shoot
+                                  id: 94
+                                  name: arcanite_robot_shoot
+                                  spriteSheet: *arcanite_golem_hit
+                                  orientation: MOVING_ANGLE
+                                  drawDepth: NORMAL
+                                  solid: true
+                                  duration: 1300
+                                  entityCollisionRadius: 0.4
+                                  mapCollisionRadius: 0.4
+                                  movement: !!LinearEffectMovement {initialDistance: 0.0, speed: 18.0, relative: false, destroyAtTargetPosition: false}
+                                  targets:
+                                  - targetType: ALL_ENEMIES
+                                    destroyWhenCollide: true
+                                    alterations:
+                                    - !!InstantDamageAlteration
+                                      targetType: TARGET
+                                      amount:
+                                        id: 246
+                                        base: 20.0
+                                        statMultipliers: []
+                                      applyToStructures: true
+                                      attributes: {bypassInvincibility: false, trueDamage: true}
+                                  repeatFollowingElements:
+                                    id: 245
+                                    base: 0.0
+                                    statMultipliers: []
+                                  delayedFollowingElements: []
+                                  deathAlterations: []
+                          predictionBulletSpeed: 18.0
+                      lifetime: 0
+                      inventorySize: 0
+                    owned: true
+                    strengthBonus:
+                      id: 251
+                      base: 0.0
+                      statMultipliers: []
+                    agilityBonus:
+                      id: 252
+                      base: 0.0
+                      statMultipliers: []
+                    intelligenceBonus:
+                      id: 253
+                      base: 0.0
+                      statMultipliers: []
+              quantity: 1
+            probability: 0.25
+          - itemStack: !!ItemStack
+              item: &pixie_egg !!EdibleItem
+                id: 97
+                name: pixie_egg
+                maxStackSize: 1
+                frame: {x: 0, y: 0}
+                image: images/pixie_egg.png
+                duration: 0
+                alterations:
+                - !!FollowingElementAlteration
+                  targetType: TARGET
+                  followingElement: !!FollowingCreature
+                    creature: &pixie_pet03
+                      id: 27
+                      name: pixie_pet
+                      spriteSheet: *pixie
+                      collisionRadius: 0.6
+                      strength: 4.0
+                      agility: 10.0
+                      intelligence: 4.0
+                      solid: true
+                      behaviorSet: &pixie_pet
+                        id: 25
+                        name: pixie_pet
+                        behaviors:
+                        - &follow02 !!MoveTowardBehavior
+                          id: 0
+                          name: follow
+                          changeConditions:
+                          - !!DistanceCondition
+                            id: 0
+                            nextBehavior: &flee !!GetAwayBehavior
+                              id: 1
+                              name: flee
+                              changeConditions:
+                              - !!DistanceCondition
+                                id: 0
+                                nextBehavior: *follow02
+                                affectedNeighborsDistance: 0.0
+                                targetType: MASTER
+                                operator: GREATER_THAN
+                                targetDistance: 8.0
+                              - !!DistanceCondition
+                                id: 0
+                                nextBehavior: *follow02
+                                affectedNeighborsDistance: 0.0
+                                targetType: CLOSEST_ENNEMY
+                                operator: GREATER_THAN
+                                targetDistance: 4.0
+                              abilityToUseId: 0
+                              targetType: CLOSEST_ENNEMY
+                            affectedNeighborsDistance: 0.0
+                            targetType: CLOSEST_ENNEMY
+                            operator: LESS_THAN
+                            targetDistance: 2.0
+                          abilityToUseId: 1
+                          targetType: MASTER
+                          minDistance: 2.0
+                          randomAngle: 0.0
+                        - *flee
+                      itemReward: null
+                      abilitySet: &pixie_pet02
+                        id: 22
+                        name: pixie_pet
+                        abilities:
+                        - !!CreatureAlterationAbility
+                          id: 0
+                          cooldown: 10000
+                          alterations:
+                          - !!FollowingElementAlteration
+                            targetType: TARGET
+                            followingElement: !!FollowingEffect
+                              offsetAngleEffect:
+                                offsetAngle: 0.0
+                                randomAngle: 0.0
+                                effect: &pixie_heal
+                                  id: 95
+                                  name: pixie_heal
+                                  spriteSheet: null
+                                  orientation: STATIC
+                                  drawDepth: NORMAL
+                                  solid: true
+                                  duration: 1000
+                                  entityCollisionRadius: 5.0
+                                  mapCollisionRadius: 5.0
+                                  movement: !!StaticEffectMovement {minDistance: 0.0, maxDistance: 0.0}
+                                  targets:
+                                  - targetType: ALL_ALLIES
+                                    destroyWhenCollide: true
+                                    alterations:
+                                    - !!InstantHealAlteration
+                                      targetType: TARGET
+                                      amount:
+                                        id: 256
+                                        base: 25.0
+                                        statMultipliers: []
+                                  repeatFollowingElements:
+                                    id: 254
+                                    base: 0.0
+                                    statMultipliers: []
+                                  delayedFollowingElements: []
+                                  deathAlterations: []
+                          predictionBulletSpeed: 0.0
+                      lifetime: 0
+                      inventorySize: 0
+                    owned: true
+                    strengthBonus:
+                      id: 258
+                      base: 0.0
+                      statMultipliers: []
+                    agilityBonus:
+                      id: 259
+                      base: 0.0
+                      statMultipliers: []
+                    intelligenceBonus:
+                      id: 260
+                      base: 0.0
+                      statMultipliers: []
+              quantity: 1
+            probability: 0.25
+          - itemStack: !!ItemStack
+              item: &rabbit_egg !!EdibleItem
+                id: 95
+                name: rabbit_egg
+                maxStackSize: 1
+                frame: {x: 0, y: 0}
+                image: images/rabbit_egg.png
+                duration: 0
+                alterations:
+                - !!FollowingElementAlteration
+                  targetType: TARGET
+                  followingElement: !!FollowingCreature
+                    creature: &rabbit04
+                      id: 25
+                      name: rabbit
+                      spriteSheet: *rabbit
+                      collisionRadius: 0.6
+                      strength: 6.0
+                      agility: 10.0
+                      intelligence: 5.0
+                      solid: true
+                      behaviorSet: &rabbit02
+                        id: 23
+                        name: rabbit
+                        behaviors:
+                        - &follow03 !!MoveTowardBehavior
+                          id: 0
+                          name: follow
+                          changeConditions:
+                          - !!TimeCondition
+                            id: 0
+                            nextBehavior: &boost !!MoveTowardBehavior
+                              id: 1
+                              name: boost
+                              changeConditions:
+                              - !!TimeCondition
+                                id: 0
+                                nextBehavior: *follow03
+                                affectedNeighborsDistance: 0.0
+                                targetTime: 500
+                              abilityToUseId: 1
+                              targetType: MASTER
+                              minDistance: 0.7
+                              randomAngle: 0.0
+                            affectedNeighborsDistance: 0.0
+                            targetTime: 30000
+                          abilityToUseId: 0
+                          targetType: MASTER
+                          minDistance: 0.7
+                          randomAngle: 0.0
+                        - *boost
+                      itemReward: null
+                      abilitySet: &rabbit03
+                        id: 20
+                        name: rabbit
+                        abilities:
+                        - !!CreatureAlterationAbility
+                          id: 0
+                          cooldown: 700
+                          alterations:
+                          - !!FollowingElementAlteration
+                            targetType: TARGET
+                            followingElement: !!FollowingEffect
+                              offsetAngleEffect:
+                                offsetAngle: 0.0
+                                randomAngle: 0.0
+                                effect: &rabbit_boost
+                                  id: 93
+                                  name: rabbit_boost
+                                  spriteSheet: null
+                                  orientation: STATIC
+                                  drawDepth: NORMAL
+                                  solid: true
+                                  duration: 50
+                                  entityCollisionRadius: 10.0
+                                  mapCollisionRadius: 0.0
+                                  movement: !!StaticEffectMovement {minDistance: 0.0, maxDistance: 0.0}
+                                  targets:
+                                  - targetType: ALL_ALLIES
+                                    destroyWhenCollide: true
+                                    alterations:
+                                    - !!StatAlteration
+                                      targetType: TARGET
+                                      duration: 15000
+                                      stackPolicy: STACK
+                                      statModifier: {statType: SPEED, operationType: ADDITIVE, value: 1.0}
+                                    - !!StatAlteration
+                                      targetType: TARGET
+                                      duration: 15000
+                                      stackPolicy: STACK
+                                      statModifier: {statType: AGILITY, operationType: ADDITIVE, value: 8.0}
+                                  repeatFollowingElements:
+                                    id: 244
+                                    base: 0.0
+                                    statMultipliers: []
+                                  delayedFollowingElements: []
+                                  deathAlterations: []
+                          predictionBulletSpeed: 0.0
+                      lifetime: 0
+                      inventorySize: 0
+                    owned: true
+                    strengthBonus:
+                      id: 249
+                      base: 0.0
+                      statMultipliers: []
+                    agilityBonus:
+                      id: 250
+                      base: 0.0
+                      statMultipliers: []
+                    intelligenceBonus:
+                      id: 251
+                      base: 0.0
+                      statMultipliers: []
+                - !!PlaySoundAlteration {targetType: TARGET, preset: POP}
+              quantity: 1
+            probability: 0.25
         abilitySet: &pixie_mage04
           id: 18
           name: pixie_mage
@@ -8164,48 +8561,20 @@ effects:
     statMultipliers: []
   delayedFollowingElements: []
   deathAlterations: []
-- &rabbit_boost
-  id: 93
-  name: rabbit_boost
-  spriteSheet: null
-  orientation: STATIC
-  drawDepth: NORMAL
-  solid: true
-  duration: 50
-  entityCollisionRadius: 10.0
-  mapCollisionRadius: 0.0
-  movement: !!StaticEffectMovement {minDistance: 0.0, maxDistance: 0.0}
-  targets:
-  - targetType: ALL_ALLIES
-    destroyWhenCollide: true
-    alterations:
-    - !!StatAlteration
-      targetType: TARGET
-      duration: 15000
-      stackPolicy: STACK
-      statModifier: {statType: SPEED, operationType: ADDITIVE, value: 1.0}
-    - !!StatAlteration
-      targetType: TARGET
-      duration: 15000
-      stackPolicy: STACK
-      statModifier: {statType: AGILITY, operationType: ADDITIVE, value: 8.0}
-  repeatFollowingElements:
-    id: 244
-    base: 0.0
-    statMultipliers: []
-  delayedFollowingElements: []
-  deathAlterations: []
-- &arcanite_robot_shoot
-  id: 94
-  name: arcanite_robot_shoot
-  spriteSheet: *arcanite_golem_hit
+- *rabbit_boost
+- *arcanite_robot_shoot
+- *pixie_heal
+- &forest_staff_shot
+  id: 96
+  name: forest_staff_shot
+  spriteSheet: *holemon_projectile
   orientation: MOVING_ANGLE
   drawDepth: NORMAL
   solid: true
-  duration: 1300
-  entityCollisionRadius: 0.4
-  mapCollisionRadius: 0.4
-  movement: !!LinearEffectMovement {initialDistance: 0.0, speed: 18.0, relative: false, destroyAtTargetPosition: false}
+  duration: 1000
+  entityCollisionRadius: 0.5
+  mapCollisionRadius: 0.5
+  movement: !!LinearEffectMovement {initialDistance: 0.0, speed: 12.0, relative: false, destroyAtTargetPosition: false}
   targets:
   - targetType: ALL_ENEMIES
     destroyWhenCollide: true
@@ -8213,40 +8582,45 @@ effects:
     - !!InstantDamageAlteration
       targetType: TARGET
       amount:
-        id: 246
-        base: 20.0
-        statMultipliers: []
+        id: 262
+        base: 15.0
+        statMultipliers:
+        - {statType: INTELLIGENCE, multiplier: 1.4}
       applyToStructures: true
-      attributes: {bypassInvincibility: false, trueDamage: true}
+      attributes: {bypassInvincibility: false, trueDamage: false}
   repeatFollowingElements:
-    id: 245
+    id: 261
     base: 0.0
     statMultipliers: []
   delayedFollowingElements: []
   deathAlterations: []
-- &pixie_heal
-  id: 95
-  name: pixie_heal
+- &pixie_summon_punch
+  id: 97
+  name: pixie_summon_punch
   spriteSheet: null
   orientation: STATIC
   drawDepth: NORMAL
-  solid: true
-  duration: 1000
-  entityCollisionRadius: 5.0
-  mapCollisionRadius: 5.0
-  movement: !!StaticEffectMovement {minDistance: 0.0, maxDistance: 0.0}
+  solid: false
+  duration: 100
+  entityCollisionRadius: 1.8
+  mapCollisionRadius: 1.8
+  movement: !!BoundEffectMovement {distance: 0.0}
   targets:
-  - targetType: ALL_ALLIES
-    destroyWhenCollide: true
+  - targetType: ALL_ENEMIES
+    destroyWhenCollide: false
     alterations:
-    - !!InstantHealAlteration
+    - !!InstantDamageAlteration
       targetType: TARGET
       amount:
-        id: 256
-        base: 25.0
-        statMultipliers: []
+        id: 264
+        base: 4.0
+        statMultipliers:
+        - {statType: INTELLIGENCE, multiplier: 1.0}
+      applyToStructures: true
+      attributes: {bypassInvincibility: false, trueDamage: false}
+    - !!PlaySoundAlteration {targetType: TARGET, preset: PUNCH}
   repeatFollowingElements:
-    id: 254
+    id: 263
     base: 0.0
     statMultipliers: []
   delayedFollowingElements: []
@@ -9329,202 +9703,136 @@ items:
           randomAngle: 0.0
           effect: *steel_shield
     ammunition: null
-- !!EdibleItem
-  id: 95
-  name: rabbit_egg
+- *rabbit_egg
+- *arcanite_automaton_egg
+- *pixie_egg
+- &forest_staff03 !!WeaponItem
+  id: 98
+  name: forest_staff
   maxStackSize: 1
   frame: {x: 0, y: 0}
-  image: images/rabbit_egg.png
-  duration: 0
-  alterations:
-  - !!FollowingElementAlteration
-    targetType: TARGET
-    followingElement: !!FollowingCreature
-      creature: &rabbit04
-        id: 25
-        name: rabbit
-        spriteSheet: *rabbit
-        collisionRadius: 0.6
-        strength: 6.0
-        agility: 10.0
-        intelligence: 5.0
-        solid: true
-        behaviorSet: &rabbit02
-          id: 23
-          name: rabbit
-          behaviors:
-          - &follow !!MoveTowardBehavior
-            id: 0
-            name: follow
-            changeConditions:
-            - !!TimeCondition
+  image: images/forest_staff.png
+  statModifiers:
+  - {statType: INTELLIGENCE, operationType: ADDITIVE, value: 2.0}
+  spriteSheet: *forest_staff02
+  baseAbility: !!ItemAlterationAbility
+    id: 0
+    cooldown: 1000
+    alterations:
+    - !!FollowingElementAlteration
+      targetType: TARGET
+      followingElement: !!FollowingEffect
+        offsetAngleEffect:
+          offsetAngle: 0.0
+          randomAngle: 0.0
+          effect: *forest_staff_shot
+    ammunition: null
+  specialAbility: !!ItemAlterationAbility
+    id: 0
+    cooldown: 20000
+    alterations:
+    - !!FollowingElementAlteration
+      targetType: TARGET
+      followingElement: !!FollowingCreature
+        creature: &pixie_warrior_summon
+          id: 28
+          name: pixie_warrior_summon
+          spriteSheet: *pixie_warrior
+          collisionRadius: 0.0
+          strength: -2.0
+          agility: 10.0
+          intelligence: 0.0
+          solid: true
+          behaviorSet: &pixie_warrior_summon02
+            id: 26
+            name: pixie_warrior_summon
+            behaviors:
+            - &follow04 !!MoveTowardBehavior
               id: 0
-              nextBehavior: &boost !!MoveTowardBehavior
-                id: 1
-                name: boost
-                changeConditions:
-                - !!TimeCondition
-                  id: 0
-                  nextBehavior: *follow
-                  affectedNeighborsDistance: 0.0
-                  targetTime: 500
-                abilityToUseId: 1
-                targetType: MASTER
-                minDistance: 0.7
-                randomAngle: 0.0
-              affectedNeighborsDistance: 0.0
-              targetTime: 30000
-            abilityToUseId: 0
-            targetType: MASTER
-            minDistance: 0.7
-            randomAngle: 0.0
-          - *boost
-        itemReward: null
-        abilitySet: &rabbit03
-          id: 20
-          name: rabbit
-          abilities:
-          - !!CreatureAlterationAbility
-            id: 0
-            cooldown: 700
-            alterations:
-            - !!FollowingElementAlteration
-              targetType: TARGET
-              followingElement: !!FollowingEffect
-                offsetAngleEffect:
-                  offsetAngle: 0.0
-                  randomAngle: 0.0
-                  effect: *rabbit_boost
-            predictionBulletSpeed: 0.0
-        lifetime: 0
-        inventorySize: 0
-      owned: true
-      strengthBonus:
-        id: 249
-        base: 0.0
-        statMultipliers: []
-      agilityBonus:
-        id: 250
-        base: 0.0
-        statMultipliers: []
-      intelligenceBonus:
-        id: 251
-        base: 0.0
-        statMultipliers: []
-  - !!PlaySoundAlteration {targetType: TARGET, preset: POP}
-- !!EdibleItem
-  id: 96
-  name: arcanite_automaton_egg
-  maxStackSize: 1
-  frame: {x: 0, y: 0}
-  image: images/arcanite_automaton_egg.png
-  duration: 0
-  alterations:
-  - !!FollowingElementAlteration
-    targetType: TARGET
-    followingElement: !!FollowingCreature
-      creature: &arcanite_automaton04
-        id: 26
-        name: arcanite_automaton
-        spriteSheet: *arcanite_automaton
-        collisionRadius: 0.5
-        strength: 10.0
-        agility: 7.0
-        intelligence: 4.0
-        solid: true
-        behaviorSet: &arcanite_automaton02
-          id: 24
-          name: arcanite_automaton
-          behaviors:
-          - &follow02 !!MoveTowardBehavior
-            id: 0
-            name: follow
-            changeConditions:
-            - !!DistanceCondition
-              id: 0
-              nextBehavior: &attack04 !!MoveTowardBehavior
-                id: 1
-                name: attack
-                changeConditions:
-                - !!DistanceCondition
-                  id: 0
-                  nextBehavior: &back_up !!GetAwayBehavior
-                    id: 2
-                    name: back up
-                    changeConditions:
-                    - !!DistanceCondition
-                      id: 0
-                      nextBehavior: *attack04
-                      affectedNeighborsDistance: 0.0
-                      targetType: CLOSEST_ENNEMY
-                      operator: GREATER_THAN
-                      targetDistance: 5.0
-                    abilityToUseId: 1
+              name: follow
+              changeConditions:
+              - !!DistanceCondition
+                id: 0
+                nextBehavior: &attack05 !!MoveTowardBehavior
+                  id: 1
+                  name: attack
+                  changeConditions:
+                  - !!DistanceCondition
+                    id: 0
+                    nextBehavior: *follow04
+                    affectedNeighborsDistance: 0.0
                     targetType: CLOSEST_ENNEMY
-                  affectedNeighborsDistance: 0.0
+                    operator: GREATER_THAN
+                    targetDistance: 16.0
+                  abilityToUseId: 1
                   targetType: CLOSEST_ENNEMY
-                  operator: LESS_THAN
-                  targetDistance: 2.0
-                - !!DistanceCondition
-                  id: 0
-                  nextBehavior: *follow02
-                  affectedNeighborsDistance: 0.0
-                  targetType: CLOSEST_ENNEMY
-                  operator: GREATER_THAN
-                  targetDistance: 10.0
-                - !!DistanceCondition
-                  id: 0
-                  nextBehavior: *follow02
-                  affectedNeighborsDistance: 0.0
-                  targetType: MASTER
-                  operator: GREATER_THAN
-                  targetDistance: 10.0
-                abilityToUseId: 1
+                  minDistance: 0.7
+                  randomAngle: 0.0
+                affectedNeighborsDistance: 0.0
                 targetType: CLOSEST_ENNEMY
-                minDistance: 4.0
-                randomAngle: 0.0
-              affectedNeighborsDistance: 0.0
-              targetType: CLOSEST_ENNEMY
-              operator: LESS_THAN
-              targetDistance: 10.0
-            abilityToUseId: 0
-            targetType: MASTER
-            minDistance: 3.0
-            randomAngle: 0.0
-          - *attack04
-          - *back_up
-        itemReward: null
-        abilitySet: &arcanite_automaton03
-          id: 21
-          name: arcanite_automaton
-          abilities:
-          - !!CreatureAlterationAbility
-            id: 0
-            cooldown: 700
-            alterations:
-            - !!FollowingElementAlteration
-              targetType: TARGET
-              followingElement: !!FollowingEffect
-                offsetAngleEffect:
-                  offsetAngle: 0.0
-                  randomAngle: 0.13962634
-                  effect: *arcanite_robot_shoot
-            predictionBulletSpeed: 18.0
-        lifetime: 0
-        inventorySize: 0
-      owned: true
-      strengthBonus:
-        id: 251
-        base: 0.0
-        statMultipliers: []
-      agilityBonus:
-        id: 252
-        base: 0.0
-        statMultipliers: []
-      intelligenceBonus:
-        id: 253
-        base: 0.0
-        statMultipliers: []
+                operator: LESS_THAN
+                targetDistance: 15.0
+              abilityToUseId: 0
+              targetType: MASTER
+              minDistance: 5.0
+              randomAngle: 0.0
+            - *attack05
+          itemReward: null
+          abilitySet: &pixie_warrior_summon03
+            id: 23
+            name: pixie_warrior_summon
+            abilities:
+            - !!CreatureAlterationAbility
+              id: 0
+              cooldown: 700
+              alterations:
+              - !!FollowingElementAlteration
+                targetType: TARGET
+                followingElement: !!FollowingEffect
+                  offsetAngleEffect:
+                    offsetAngle: 0.0
+                    randomAngle: 0.0
+                    effect: *pixie_summon_punch
+              predictionBulletSpeed: 0.0
+          lifetime: 10000
+          inventorySize: 0
+        owned: true
+        strengthBonus:
+          id: 266
+          base: 0.0
+          statMultipliers:
+          - {statType: INTELLIGENCE, multiplier: 0.2}
+        agilityBonus:
+          id: 267
+          base: 0.0
+          statMultipliers:
+          - {statType: INTELLIGENCE, multiplier: 0.5}
+        intelligenceBonus:
+          id: 268
+          base: 0.0
+          statMultipliers:
+          - {statType: INTELLIGENCE, multiplier: 1.0}
+    - !!FollowingElementAlteration
+      targetType: TARGET
+      followingElement: !!FollowingCreature
+        creature: *pixie_warrior_summon
+        owned: true
+        strengthBonus:
+          id: 269
+          base: 0.0
+          statMultipliers:
+          - {statType: INTELLIGENCE, multiplier: 0.2}
+        agilityBonus:
+          id: 270
+          base: 0.0
+          statMultipliers:
+          - {statType: INTELLIGENCE, multiplier: 0.5}
+        intelligenceBonus:
+          id: 271
+          base: 0.0
+          statMultipliers:
+          - {statType: INTELLIGENCE, multiplier: 1.0}
+    ammunition: null
 itemCrafts:
 - id: 0
   name: wood_sword
@@ -10603,6 +10911,25 @@ itemCrafts:
   discoveryItems:
   - *steel_bar
   requiredStructure: *tinker_table02
+- id: 66
+  name: forest_staff
+  duration: 10000
+  result: !!ItemStack
+    item: *forest_staff03
+    quantity: 1
+  recipes:
+  - item: *pixie_powder
+    quantity: 5
+  - item: *magic_wood
+    quantity: 4
+  - item: *magic_wand03
+    quantity: 1
+  - item: *golem_heart
+    quantity: 1
+  discoveryItems:
+  - *pixie_powder
+  - *magic_wood
+  requiredStructure: *enchantment_table02
 itemRewards:
 - &tree02
   id: 0
@@ -10721,6 +11048,10 @@ itemRewards:
       item: *fire_soul
       quantity: 1
     probability: 1.0
+  - itemStack: !!ItemStack
+      item: *rabbit_egg
+      quantity: 1
+    probability: 0.5
 - &ice_dragon03
   id: 8
   name: ice_dragon
@@ -10729,6 +11060,10 @@ itemRewards:
       item: *ice_soul
       quantity: 1
     probability: 1.0
+  - itemStack: !!ItemStack
+      item: *arcanite_automaton_egg
+      quantity: 1
+    probability: 0.5
 - &necrodamon03
   id: 9
   name: necrodamon
@@ -10737,6 +11072,10 @@ itemRewards:
       item: *deamon_soul
       quantity: 1
     probability: 1.0
+  - itemStack: !!ItemStack
+      item: *pixie_egg
+      quantity: 1
+    probability: 0.5
 - &arcanite_golem03
   id: 10
   name: arcanite_golem
@@ -11632,45 +11971,8 @@ behaviorSets:
 - *ball_breaker02
 - *rabbit02
 - *arcanite_automaton02
-- &pixie_pet
-  id: 25
-  name: pixie_pet
-  behaviors:
-  - &follow03 !!MoveTowardBehavior
-    id: 0
-    name: follow
-    changeConditions:
-    - !!DistanceCondition
-      id: 0
-      nextBehavior: &flee !!GetAwayBehavior
-        id: 1
-        name: flee
-        changeConditions:
-        - !!DistanceCondition
-          id: 0
-          nextBehavior: *follow03
-          affectedNeighborsDistance: 0.0
-          targetType: MASTER
-          operator: GREATER_THAN
-          targetDistance: 8.0
-        - !!DistanceCondition
-          id: 0
-          nextBehavior: *follow03
-          affectedNeighborsDistance: 0.0
-          targetType: CLOSEST_ENNEMY
-          operator: GREATER_THAN
-          targetDistance: 4.0
-        abilityToUseId: 0
-        targetType: CLOSEST_ENNEMY
-      affectedNeighborsDistance: 0.0
-      targetType: CLOSEST_ENNEMY
-      operator: LESS_THAN
-      targetDistance: 2.0
-    abilityToUseId: 1
-    targetType: MASTER
-    minDistance: 2.0
-    randomAngle: 0.0
-  - *flee
+- *pixie_pet
+- *pixie_warrior_summon02
 abilitySets:
 - *ninja_pig03
 - *night_ghost
@@ -12067,22 +12369,8 @@ abilitySets:
 - *ball_breaker03
 - *rabbit03
 - *arcanite_automaton03
-- &pixie_pet02
-  id: 22
-  name: pixie_pet
-  abilities:
-  - !!CreatureAlterationAbility
-    id: 0
-    cooldown: 10000
-    alterations:
-    - !!FollowingElementAlteration
-      targetType: TARGET
-      followingElement: !!FollowingEffect
-        offsetAngleEffect:
-          offsetAngle: 0.0
-          randomAngle: 0.0
-          effect: *pixie_heal
-    predictionBulletSpeed: 0.0
+- *pixie_pet02
+- *pixie_warrior_summon03
 creatures:
 - &pixie04
   id: 0
@@ -12254,19 +12542,8 @@ creatures:
 - *ball_breaker04
 - *rabbit04
 - *arcanite_automaton04
-- id: 27
-  name: pixie_pet
-  spriteSheet: *pixie
-  collisionRadius: 0.6
-  strength: 4.0
-  agility: 10.0
-  intelligence: 4.0
-  solid: true
-  behaviorSet: *pixie_pet
-  itemReward: null
-  abilitySet: *pixie_pet02
-  lifetime: 0
-  inventorySize: 0
+- *pixie_pet03
+- *pixie_warrior_summon
 tiles:
 - &grass
   id: 0

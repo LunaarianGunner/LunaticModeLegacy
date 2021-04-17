@@ -305,6 +305,14 @@ children:
       - !!element {type: ITEM_CRAFT, id: 63}
       - !!element {type: EFFECT, id: 90}
       - !!element {type: EFFECT, id: 91}
+    - !!folder
+      name: Forest Staff
+      children:
+      - !!element {type: SPRITE_SHEET, id: 135}
+      - !!element {type: EQUIPMENT_OFFSET, id: 20}
+      - !!element {type: EFFECT, id: 96}
+      - !!element {type: ITEM, id: 98}
+      - !!element {type: ITEM_CRAFT, id: 66}
   - !!folder
     name: Clothing
     children:
@@ -374,6 +382,10 @@ children:
         name: Arcanite Automaton
         children:
         - !!element {type: ITEM, id: 96}
+      - !!folder
+        name: Pixie
+        children:
+        - !!element {type: ITEM, id: 97}
   - !!folder
     name: Structures
     children:
@@ -786,6 +798,13 @@ children:
       - !!element {type: ABILITY_SET, id: 22}
       - !!element {type: EFFECT, id: 95}
       - !!element {type: CREATURE, id: 27}
+    - !!folder
+      name: Pixie Warrior
+      children:
+      - !!element {type: CREATURE, id: 28}
+      - !!element {type: BEHAVIOR_SET, id: 26}
+      - !!element {type: ABILITY_SET, id: 23}
+      - !!element {type: EFFECT, id: 97}
 - !!folder
   name: Map
   children:
